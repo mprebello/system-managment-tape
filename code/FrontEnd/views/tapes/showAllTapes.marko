@@ -1,12 +1,14 @@
 <html>
     <head>
-        <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
-        <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
         <meta charset="utf-8">
     </head>
     <body>
         <h1>Fitas</h1><br>
-        <table class="table">
+        <input type="text" id="myInput" onkeyup="searchInTable()" placeholder="Procure pelo Serial">
+        <table id="myTable" class="table table-hover">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Serial</th>
@@ -31,4 +33,24 @@
           </tbody>
         </table>
     </body>
+    <script>
+    function searchInTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("th")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
 </html>

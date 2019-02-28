@@ -1,10 +1,10 @@
 
+/*
 var config = require('../config/config.json');
 var serverlink = "http://" +config.serverdata.host + ":" + config.serverdata.port;
-console.log(serverlink);
 
 module.exports = (app) => {
-
+  const express = require('express');
   const request = require('request');
 
   function captureJsonFromBackEnd(){
@@ -33,8 +33,24 @@ module.exports = (app) => {
     return value;
   }
 
-  app.get('/', function(req, resp) {
+  app.get('/tapes', function(req, resp) {
     openBookForm(resp);
     });
 
+
+  app.get('/login', function(req, resp) {
+    resp.marko(require('../views/login/loginForm.marko'));
+    });
+
+  app.get('/reports', function(req, resp) {
+    resp.marko(require('../views/reports/showReportIndex.marko'));
+    });
+
+
+  app.use('/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js'));
+  app.use('/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css'));
+  app.use('/js', express.static(__dirname + '/../node_modules/jquery/dist'));
+
+
 };
+*/

@@ -17,16 +17,16 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html><head><link rel=\"stylesheet\" href=\"../../node_modules/bootstrap/dist/css/bootstrap.min.css\"><script src=\"../../node_modules/bootstrap/dist/js/bootstrap.min.js\"></script><meta charset=\"utf-8\"></head><body>");
+  out.w("<html><head><link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\"><script src=\"/js/jquery.min.js\"></script><script src=\"/js/bootstrap.min.js\"></script><meta charset=\"utf-8\"></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<h1>Fitas</h1><br><table class=\"table\"><thead class=\"thead-dark\"><tr><th scope=\"col\">Serial</th><th scope=\"col\">Nome da Media</th><th scope=\"col\">Pool da Media</th><th scope=\"col\">ServerName Media</th><th scope=\"col\">Ultima escrita</th><th scope=\"col\">Tempo para Expira</th><th scope=\"col\">Projeto</th></tr></thead><tbody>");
+  out.w("<h1>Fitas</h1><br><input type=\"text\" id=\"myInput\" onkeyup=\"searchInTable()\" placeholder=\"Procure pelo Serial\"><table id=\"myTable\" class=\"table table-hover\"><thead class=\"thead-dark\"><tr><th scope=\"col\">Serial</th><th scope=\"col\">Nome da Media</th><th scope=\"col\">Pool da Media</th><th scope=\"col\">ServerName Media</th><th scope=\"col\">Ultima escrita</th><th scope=\"col\">Tempo para Expira</th><th scope=\"col\">Projeto</th></tr></thead><tbody>");
 
-  var for__19 = 0;
+  var for__21 = 0;
 
   marko_forEach(data, function(fita) {
-    var keyscope__20 = "[" + ((for__19++) + "]");
+    var keyscope__22 = "[" + ((for__21++) + "]");
 
     out.w("<tr><th scope=\"row\">" +
       marko_escapeXml(fita.MediaSerial) +
@@ -49,9 +49,9 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "29");
+  await_reorderer_tag({}, out, __component, "31");
 
-  out.w("</body></html>");
+  out.w("</body><script>\n    function searchInTable() {\n      var input, filter, table, tr, td, i, txtValue;\n      input = document.getElementById(\"myInput\");\n      filter = input.value.toUpperCase();\n      table = document.getElementById(\"myTable\");\n      tr = table.getElementsByTagName(\"tr\");\n      for (i = 0; i < tr.length; i++) {\n        td = tr[i].getElementsByTagName(\"th\")[0];\n        if (td) {\n          txtValue = td.textContent || td.innerText;\n          if (txtValue.toUpperCase().indexOf(filter) > -1) {\n            tr[i].style.display = \"\";\n          } else {\n            tr[i].style.display = \"none\";\n          }\n        }\n      }\n    }\n    </script></html>");
 }
 
 marko_template._ = marko_renderer(render, {
