@@ -6,8 +6,12 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
+    header_template = marko_loadTemplate(require.resolve("../templates/header.marko")),
+    menu_template = marko_loadTemplate(require.resolve("../templates/menu.marko")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag")),
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
@@ -17,16 +21,26 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html lang=\"en\"><head><meta charset=\"utf-8\"><link href=\"/css/bootstrap.min.css\" rel=\"stylesheet\"><script src=\"/js/bootstrap.min.js\"></script></head><body>");
+  out.w("<html lang=\"en\"><head>");
+
+  include_tag({
+      _target: header_template
+    }, out, __component, "2");
+
+  out.w("</head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<h1>TOTAL FITAS</h1><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>REPOSITORIO EXTERNO</th><th>REPOSITORIO LOCAL</th><th>TOTAL FITAS SCRATCH</th><th>TOTAL FITAS</th></tr></thead><tbody>");
+  include_tag({
+      _target: menu_template
+    }, out, __component, "4");
 
-  var for__17 = 0;
+  out.w("<h2>Relatorio Fitas</h2><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>REPOSITORIO EXTERNO</th><th>REPOSITORIO LOCAL</th><th>TOTAL FITAS SCRATCH</th><th>TOTAL FITAS</th></tr></thead><tbody>");
+
+  var for__16 = 0;
 
   marko_forEach(data, function(info) {
-    var keyscope__18 = "[" + ((for__17++) + "]");
+    var keyscope__17 = "[" + ((for__16++) + "]");
 
     out.w("<tr><th scope=\"row\">" +
       marko_escapeXml(info.group) +
@@ -47,7 +61,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "26");
+  await_reorderer_tag({}, out, __component, "25");
 
   out.w("</body></html>");
 }
@@ -62,6 +76,9 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/system-tape-manage$1.0.0/views/reports/showReportIndex.marko",
     tags: [
+      "../templates/header.marko",
+      "../templates/menu.marko",
+      "marko/src/taglibs/core/include-tag",
       "marko/src/components/taglib/component-globals-tag",
       "marko/src/components/taglib/init-components-tag",
       "marko/src/taglibs/async/await-reorderer-tag"

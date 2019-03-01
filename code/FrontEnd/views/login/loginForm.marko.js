@@ -6,8 +6,11 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
+    header_template = marko_loadTemplate(require.resolve("../templates/header.marko")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag")),
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
     init_components_tag = marko_loadTag(require("marko/src/components/taglib/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/taglibs/async/await-reorderer-tag"));
@@ -15,15 +18,21 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html lang=\"en\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Bootstrap Simple Login Form</title><link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\"><script src=\"/js/bootstrap.min.js\"></script><script src=\"/js/jquery.min.js\"></script><style type=\"text/css\">\r\n\t.login-form {\r\n\t\twidth: 340px;\r\n    \tmargin: 50px auto;\r\n\t}\r\n    .login-form form {\r\n    \tmargin-bottom: 15px;\r\n        background: #f7f7f7;\r\n        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);\r\n        padding: 30px;\r\n    }\r\n    .login-form h2 {\r\n        margin: 0 0 15px;\r\n    }\r\n    .form-control, .btn {\r\n        min-height: 38px;\r\n        border-radius: 2px;\r\n    }\r\n    .btn {\r\n        font-size: 15px;\r\n        font-weight: bold;\r\n    }\r\n</style></head><body>");
+  out.w("<html lang=\"en\"><head>");
+
+  include_tag({
+      _target: header_template
+    }, out, __component, "2");
+
+  out.w("</head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<div class=\"login-form\"><form action=\"/examples/actions/confirmation.php\" method=\"post\"><h2 class=\"text-center\">Log in</h2><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Username\" required=\"required\"></div><div class=\"form-group\"><input type=\"password\" class=\"form-control\" placeholder=\"Password\" required=\"required\"></div><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary btn-block\">Log in</button></div><div class=\"clearfix\"><label class=\"pull-left checkbox-inline\"><input type=\"checkbox\"> Remember me</label></div></form></div>");
+  out.w("<div class=\"login-form\"><form action=\"/auth\" method=\"post\"><h1 class=\"text-center\">Sistema de Fita</h1><h2 class=\"text-center\">Log in</h2><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Usuario\" required=\"required\"></div><div class=\"form-group\"><input type=\"password\" class=\"form-control\" placeholder=\"Senha\" required=\"required\"></div><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary btn-block\">Log in</button></div><div class=\"clearfix\"><label class=\"pull-left checkbox-inline\"><input type=\"checkbox\"> Lembre me</label></div><div><label class=\"form-group\"><a href=\"https://senha.uninet.com.br\">Recuperar Senha</a></label></div></form></div>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "23");
+  await_reorderer_tag({}, out, __component, "20");
 
   out.w("</body></html>");
 }
@@ -38,6 +47,8 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/system-tape-manage$1.0.0/views/login/loginForm.marko",
     tags: [
+      "../templates/header.marko",
+      "marko/src/taglibs/core/include-tag",
       "marko/src/components/taglib/component-globals-tag",
       "marko/src/components/taglib/init-components-tag",
       "marko/src/taglibs/async/await-reorderer-tag"

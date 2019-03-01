@@ -6,8 +6,12 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
+    header_template = marko_loadTemplate(require.resolve("../templates/header.marko")),
+    menu_template = marko_loadTemplate(require.resolve("../templates/menu.marko")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag")),
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
@@ -17,16 +21,26 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html><head><link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\"><script src=\"/js/jquery.min.js\"></script><script src=\"/js/bootstrap.min.js\"></script><meta charset=\"utf-8\"></head><body>");
+  out.w("<html><head>");
+
+  include_tag({
+      _target: header_template
+    }, out, __component, "2");
+
+  out.w("</head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<h1>Fitas</h1><br><input type=\"text\" id=\"myInput\" onkeyup=\"searchInTable()\" placeholder=\"Procure pelo Serial\"><table id=\"myTable\" class=\"table table-hover\"><thead class=\"thead-dark\"><tr><th scope=\"col\">Serial</th><th scope=\"col\">Nome da Media</th><th scope=\"col\">Pool da Media</th><th scope=\"col\">ServerName Media</th><th scope=\"col\">Ultima escrita</th><th scope=\"col\">Tempo para Expira</th><th scope=\"col\">Projeto</th></tr></thead><tbody>");
+  include_tag({
+      _target: menu_template
+    }, out, __component, "4");
 
-  var for__21 = 0;
+  out.w("<h2>Fitas</h2><br><input type=\"text\" id=\"myInput\" onkeyup=\"searchInTable()\" placeholder=\"Procure pelo Serial\"><table id=\"myTable\" class=\"table table-hover\"><thead class=\"thead-dark\"><tr><th scope=\"col\">Serial</th><th scope=\"col\">Nome da Media</th><th scope=\"col\">Pool da Media</th><th scope=\"col\">ServerName Media</th><th scope=\"col\">Ultima escrita</th><th scope=\"col\">Tempo para Expira</th><th scope=\"col\">Projeto</th></tr></thead><tbody>");
+
+  var for__19 = 0;
 
   marko_forEach(data, function(fita) {
-    var keyscope__22 = "[" + ((for__21++) + "]");
+    var keyscope__20 = "[" + ((for__19++) + "]");
 
     out.w("<tr><th scope=\"row\">" +
       marko_escapeXml(fita.MediaSerial) +
@@ -49,9 +63,9 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "31");
+  await_reorderer_tag({}, out, __component, "29");
 
-  out.w("</body><script>\n    function searchInTable() {\n      var input, filter, table, tr, td, i, txtValue;\n      input = document.getElementById(\"myInput\");\n      filter = input.value.toUpperCase();\n      table = document.getElementById(\"myTable\");\n      tr = table.getElementsByTagName(\"tr\");\n      for (i = 0; i < tr.length; i++) {\n        td = tr[i].getElementsByTagName(\"th\")[0];\n        if (td) {\n          txtValue = td.textContent || td.innerText;\n          if (txtValue.toUpperCase().indexOf(filter) > -1) {\n            tr[i].style.display = \"\";\n          } else {\n            tr[i].style.display = \"none\";\n          }\n        }\n      }\n    }\n    </script></html>");
+  out.w("</body><script src=\"jspub/searchInTable.js\"></script></html>");
 }
 
 marko_template._ = marko_renderer(render, {
@@ -64,6 +78,9 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/system-tape-manage$1.0.0/views/tapes/showAllTapes.marko",
     tags: [
+      "../templates/header.marko",
+      "../templates/menu.marko",
+      "marko/src/taglibs/core/include-tag",
       "marko/src/components/taglib/component-globals-tag",
       "marko/src/components/taglib/init-components-tag",
       "marko/src/taglibs/async/await-reorderer-tag"

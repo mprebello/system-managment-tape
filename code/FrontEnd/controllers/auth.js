@@ -5,7 +5,7 @@ async function generateViewLogin(resp){
   resp.marko(require('../views/login/loginForm.marko'));
 }
 
-app.get('/login', function(req, resp) {
+app.post('/auth', function(req, resp) {
   generateViewLogin(resp);
   });
 

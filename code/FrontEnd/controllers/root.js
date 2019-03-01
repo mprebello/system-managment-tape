@@ -5,8 +5,8 @@ async function generateViewLogin(resp){
   resp.marko(require('../views/login/loginForm.marko'));
 }
 
-app.get('/login', function(req, resp) {
-  generateViewLogin(resp);
+app.get('/', function(req, resp) {
+  resp.redirect('./reports');
   });
 
 }
