@@ -27,22 +27,8 @@ class ManageInformation {
     });
   }
 
+}
 
-}
-/*
-function captureJsonFromBackEnd(){
-  return new Promise ((resolve, reject) => {
-    request(serverlink + '/tapes', { json: true }, (err, res, body) => {
-        if (err) {
-          return console.log('error');
-          return reject('error');
-        } else {
-          return resolve(body);
-        }
-      });
-  });
-}
-*/
 
 module.exports = function(){
     return ManageInformation;

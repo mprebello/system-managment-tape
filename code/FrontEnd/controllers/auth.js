@@ -1,12 +1,28 @@
 module.exports = (app) => {
-async function generateViewLogin(resp){
-  //manageInformation = new app.persist.ManageInformation();
-  //const captureReportMedias = await manageInformation.captureReportMedias().catch(error => console.log(error));
-  resp.marko(require('../views/login/loginForm.marko'));
-}
+  async function validateUser(req, resp){
+    user = req.body.user;
+    password = req.body.password;
+    authUser = new app.persist.AuthUser();
+    await authUser.validateUsers(user, password)
+          .then(result => {
+            resp.set('x-access-token', result);
+            resp.cookie('mytapesystem', result);
+            resp.redirect('./reports');
+          })
+          .catch(error => resp.redirect('./login'));
+  }
 
-app.post('/auth', function(req, resp) {
-  generateViewLogin(resp);
-  });
+  app.post('/auth', function(req, resp) {
+    validateUser(req, resp);
+    });
+
+
+   app.use('/*', function(req, res, next) {
+    authUser = new app.persist.AuthUser();
+    authUser.validateToken(req)
+            .then(ok => { next() })
+            .catch(error => res.redirect('./login'));
+    });
+
 
 }

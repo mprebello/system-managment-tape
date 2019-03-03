@@ -6,7 +6,15 @@ async function generateViewLogin(resp){
 }
 
 app.get('/login', function(req, resp) {
-  generateViewLogin(resp);
+  authUser = new app.persist.AuthUser();
+  authUser.validateToken(req)
+          .then(ok => resp.redirect('./reports')).
+          catch(error => generateViewLogin(resp));
+  });
+
+app.get('/logout', function(req, resp) {
+  resp.clearCookie('mytapesystem');
+  resp.redirect('./login');
   });
 
 }

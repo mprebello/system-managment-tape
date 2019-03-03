@@ -1,29 +1,25 @@
 <html lang="en">
 	<head>
 		<include('../templates/header.marko')></include>
-</head>
-<body>
-<div class="login-form">
-    <form action="/auth" method="post">
-				<h1 class="text-center">Sistema de Fita</h1>
+	</head>
+	<body>
+		<div class="login-form">
+    	<form action="/auth" method="post">
+				<h1 class="text-center">Sistema de Fitas</h1>
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Usuario" required="required">
+            <input type="text" id="user" name="user" class="form-control" placeholder="user" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Senha" required="required">
+            <input type="password" id="password" name="password" class="form-control" placeholder="password" required="required">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
-        </div>
-        <div class="clearfix">
-            <label class="pull-left checkbox-inline"><input type="checkbox"> Lembre me</label>
+            <button type="submit" class="btn btn-primary btn-block" value="login">Log in</button>
         </div>
 				<div>
             <label class="form-group"><a href="https://senha.uninet.com.br">Recuperar Senha</a></label>
         </div>
-
-    </form>
-</div>
-</body>
+    	</form>
+		</div>
+	</body>
 </html>

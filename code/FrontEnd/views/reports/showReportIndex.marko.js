@@ -35,7 +35,7 @@ function render(input, out, __component, component, state) {
       _target: menu_template
     }, out, __component, "4");
 
-  out.w("<h2>Relatorio Fitas</h2><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>REPOSITORIO EXTERNO</th><th>REPOSITORIO LOCAL</th><th>TOTAL FITAS SCRATCH</th><th>TOTAL FITAS</th></tr></thead><tbody>");
+  out.w("<h2>Relatorio Fitas</h2><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>Repositorio Externo</th><th>Repositorio Local</th><th>Total Fitas Scratch</th><th>Total Fitas</th></tr></thead><tbody>");
 
   var for__16 = 0;
 

@@ -6,6 +6,11 @@
   "server": {
     "host": "localhost",
     "port": 3000
+  },
+  "authentication": {
+    "ldapserver": "ldap://x.x.x.x:389",
+    "searchBase": "dc=xxx,dc=xxxx",
+    "filter": "(uid={{usexrname}})",
+    "secretKeyToken" : "XXXXXXXXXXXXXXXXXXXX"
   }
-
 }

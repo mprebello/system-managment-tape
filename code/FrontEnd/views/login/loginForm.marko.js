@@ -28,11 +28,11 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<div class=\"login-form\"><form action=\"/auth\" method=\"post\"><h1 class=\"text-center\">Sistema de Fita</h1><h2 class=\"text-center\">Log in</h2><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Usuario\" required=\"required\"></div><div class=\"form-group\"><input type=\"password\" class=\"form-control\" placeholder=\"Senha\" required=\"required\"></div><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary btn-block\">Log in</button></div><div class=\"clearfix\"><label class=\"pull-left checkbox-inline\"><input type=\"checkbox\"> Lembre me</label></div><div><label class=\"form-group\"><a href=\"https://senha.uninet.com.br\">Recuperar Senha</a></label></div></form></div>");
+  out.w("<div class=\"login-form\"><form action=\"/auth\" method=\"post\"><h1 class=\"text-center\">Sistema de Fitas</h1><h2 class=\"text-center\">Log in</h2><div class=\"form-group\"><input type=\"text\" id=\"user\" name=\"user\" class=\"form-control\" placeholder=\"user\" required=\"required\"></div><div class=\"form-group\"><input type=\"password\" id=\"password\" name=\"password\" class=\"form-control\" placeholder=\"password\" required=\"required\"></div><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary btn-block\" value=\"login\">Log in</button></div><div><label class=\"form-group\"><a href=\"https://senha.uninet.com.br\">Recuperar Senha</a></label></div></form></div>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "20");
+  await_reorderer_tag({}, out, __component, "17");
 
   out.w("</body></html>");
 }
