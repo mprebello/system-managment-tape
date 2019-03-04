@@ -11,7 +11,7 @@ class ManageInformation {
     return new Promise ((resolve, reject) => {
       let path_to_access = this._server_to_connect + '/tapes';
       request( path_to_access,{ json: true }, (err, res, body) => {
-        if (err) { return reject(error); }
+        if (err) { return reject(err); }
         return resolve(body);
       });
     });
@@ -21,7 +21,7 @@ class ManageInformation {
     return new Promise ((resolve, reject) => {
       let path_to_access = this._server_to_connect + '/reports';
       request( path_to_access,{ json: true }, (err, res, body) => {
-        if (err) { return reject(error); }
+        if (err) { return reject(err); }
         return resolve(body);
       });
     });
