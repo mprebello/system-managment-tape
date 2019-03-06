@@ -19,21 +19,12 @@ class AuthLdap {
   _validateUserOnLdap(){
     passport.use(new LdapStrategy(ldapOptions));
     passport.initialize();
-    passport.authenticate('ldapauth', {session: false}), function(req, res) {
-      res.send({status: 'ok'});
-    });
+    //passport.authenticate('ldapauth', {session: false}), function(req, res) {}
   }
-
-
-  app.post('/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {
-    res.send({status: 'ok'});
-  });
-
 
 }
 
 
-
 module.exports = function(){
-    return LdapAuth;
+    return AuthLdap;
 };
