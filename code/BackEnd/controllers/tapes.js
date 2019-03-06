@@ -3,6 +3,7 @@ module.exports = function(app){
     var connection = app.persist.connectionFactory();
     var manageMedia = new app.persist.ManageMedia(connection);
     const captureAllTapes = await manageMedia.listAllTapes().catch(error => console.log(error));
+    manageMedia.endDbConnection();
     res.status(201).json(captureAllTapes);
   }
 

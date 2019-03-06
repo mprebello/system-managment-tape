@@ -1,6 +1,7 @@
 class ManageMedia2 {
   constructor(connection){
     this._connection = connection;
+     //condition = [ GROUP, 'A1%', 'S1%', 'M1%', 'D1%', 'ESP_6_ANOS_INT' ];
   }
 
   captureMediasFromProject(project){
@@ -8,7 +9,7 @@ class ManageMedia2 {
     return resultado;
   }
 
-  _endDbConnection(){
+  endDbConnection(){
     this._connection.end();
   }
 
@@ -17,10 +18,8 @@ class ManageMedia2 {
     return new Promise ( (resolve, reject) => {
       this._connection.query('select * from Library', (error, tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('erro');
         }
-        this._endDbConnection();
         return resolve(tapes);
       });
     });
@@ -29,11 +28,7 @@ class ManageMedia2 {
   captureAllGroups(){
     return new Promise ( (resolve, reject) => {
       this._connection.query('SELECT DISTINCT(Project) as PROJECT FROM Library;', (error, groups) => {
-        if (error) {
-          this._endDbConnection();
-          return reject('error');
-        }
-        this._endDbConnection();
+        if (error) { return reject('error'); }
         return resolve(groups);
       });
     });
@@ -43,10 +38,8 @@ class ManageMedia2 {
     return new Promise ( (resolve, reject) => {
       this._connection.query('SELECT * FROM Library where Project = ?;',[GROUP],(error, specif_tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('error');
         }
-        this._endDbConnection();
         return resolve(specif_tapes);
       });
     });
@@ -57,10 +50,8 @@ class ManageMedia2 {
       var condition = 'SCRATCH%';
       this._connection.query('SELECT COUNT(MediaSerial) as RESULT FROM Library where Project = ? and Pool like ?;',[GROUP, condition],(error, specif_tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('error');
         }
-        this._endDbConnection();
         return resolve(specif_tapes);
       });
     });
@@ -73,10 +64,8 @@ class ManageMedia2 {
       this._connection.query(
         'SELECT COUNT(MediaSerial) as RESULT FROM Library where Project = ? and (Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ?);',condition,(error, specif_tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('error');
         }
-        this._endDbConnection();
         return resolve(specif_tapes);
       });
     });
@@ -87,10 +76,8 @@ class ManageMedia2 {
       var condition = [ GROUP, 'A1%', 'S1%', 'M1%', 'D1%', 'ESP_6_ANOS_INT' ];
       this._connection.query('SELECT COUNT(MediaSerial) as RESULT FROM Library where Project = ? and (Pool like ? or Pool like ? or Pool like ? or Pool like ? or Pool like ?);',condition,(error, specif_tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('error');
         }
-        this._endDbConnection();
         return resolve(specif_tapes);
       });
     });
@@ -101,10 +88,8 @@ class ManageMedia2 {
       var condition = 'SCRATCH%';
       this._connection.query('SELECT COUNT(MediaSerial) as RESULT FROM Library where Project = ?;',[GROUP],(error, specif_tapes) => {
         if (error) {
-          this._endDbConnection();
           return reject('error');
         }
-        this._endDbConnection();
         return resolve(specif_tapes);
       });
     });

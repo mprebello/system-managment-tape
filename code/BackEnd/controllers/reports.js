@@ -22,7 +22,7 @@ async function captureTables(res){
     } ;
     final_result.push(result_now);
   }
-
+  manageMedia.endDbConnection();
   res.status(200).json(final_result);
 }
 
