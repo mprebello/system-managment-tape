@@ -2,6 +2,9 @@ class ManageMedia2 {
   constructor(connection){
     this._connection = connection;
      //condition = [ GROUP, 'A1%', 'S1%', 'M1%', 'D1%', 'ESP_6_ANOS_INT' ];
+    this._condition_scratch = [ 'SCRATCH%' ];
+    this._condition_external = [ 'NFE_SPC%', 'A2%', 'S2%', 'M2%', 'D2%', 'ESP_6_ANOS', 'NFE_SPC%', 'NFE_WLY%', 'NFE_MLY%' ];
+    this._condition_local = [ 'A1%', 'S1%', 'M1%', 'D1%', 'ESP_6_ANOS_INT' ];
   }
 
   captureMediasFromProject(project){
@@ -20,7 +23,8 @@ class ManageMedia2 {
         if (error) {
           return reject('erro');
         }
-        return resolve(tapes);
+        var tapes_with_repository = this._insertRepository(tapes);
+        return resolve(tapes_with_repository);
       });
     });
   }
@@ -55,6 +59,43 @@ class ManageMedia2 {
         return resolve(specif_tapes);
       });
     });
+  }
+
+
+  _insertRepository(tapes){
+    var tapes_filtered = []
+    for (let number in tapes) {
+      var tape_now = tapes[number];
+      var tape_pool = tape_now.Pool;
+      var tape_pool_name = this._validatePool(tape_pool);
+      tape_now['Repo'] = tape_pool_name;
+      tapes_filtered.push(tape_now);
+    }
+      return tapes_filtered;
+  }
+
+  _validatePool(pool){
+    var repository;
+    //this._condition_scratch = [ 'SCRATCH%' ];
+    //this._condition_external = [ 'NFE_SPC%', 'A2%', 'S2%', 'M2%', 'D2%', 'ESP_6_ANOS', 'NFE_SPC%', 'NFE_WLY%', 'NFE_MLY%' ];
+    //this._condition_local = [ 'A1%', 'S1%', 'M1%', 'D1%', 'ESP_6_ANOS_INT' ];
+    var condition_scratch = /^SCRATCH/i ;
+    var condition_local = /^S2|^S1|^M1|^D1|^ESP_6_ANOS_INT$/ ;
+    switch (pool) {
+      case (pool.match(condition_scratch) || {}).input:
+        repository = 'reciclagem'
+        break;
+      case (pool.match(condition_local) || {}).input:
+        repository = 'local'
+        break;
+      default:
+        repository = 'externo';
+        break;
+    }
+    return repository;
+
+    //return 'reciclagem';
+    //return 'local'
   }
 
   captureAllTapeByGroupsOnRemote(GROUP){

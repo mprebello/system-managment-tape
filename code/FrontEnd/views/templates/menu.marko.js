@@ -5,12 +5,16 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/system-tape-manage$1.0.0/views/templates/menu.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c;
+    marko_defineComponent = components_helpers.c,
+    marko_helpers = require("marko/src/runtime/html/helpers"),
+    marko_escapeXml = marko_helpers.x;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div id=\"mySidenav\" class=\"sidenav\"><a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a><a href=\"/reports\">Relatorios</a><a href=\"/tapes\">Fitas</a><a href=\"/logout\">Logout</a></div><h1><span style=\"font-size:30px;cursor:pointer\" onclick=\"openNav()\">&#9776;</span> Sistema de Medias</h1><script src=\"jspub/nav.js\"></script>");
+  out.w("<div id=\"mySidenav\" class=\"sidenav\"><a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a><a>logado: " +
+    marko_escapeXml(data.user) +
+    "</a><a href=\"/reports\">Relatorios</a><a href=\"/tapes\">Fitas</a><a href=\"/logout\">Logout</a></div><h1><span style=\"font-size:30px;cursor:pointer\" onclick=\"openNav()\">&#9776;</span> Sistema de Medias</h1><script src=\"jspub/nav.js\"></script>");
 }
 
 marko_template._ = marko_renderer(render, {

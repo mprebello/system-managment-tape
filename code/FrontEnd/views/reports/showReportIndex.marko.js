@@ -15,6 +15,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
+    marko_escapeXmlAttr = marko_helpers.xa,
     init_components_tag = marko_loadTag(require("marko/src/components/taglib/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/taglibs/async/await-reorderer-tag"));
 
@@ -32,36 +33,49 @@ function render(input, out, __component, component, state) {
   component_globals_tag({}, out);
 
   include_tag({
-      _target: menu_template
+      _target: menu_template,
+      _arg: {
+          user: data.user_info.login
+        }
     }, out, __component, "4");
 
-  out.w("<h2>Relatorio Fitas</h2><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>Repositorio Externo</th><th>Repositorio Local</th><th>Total Fitas Scratch</th><th>Total Fitas</th></tr></thead><tbody>");
+  out.w("<h2>Relatorio Fitas</h2><table class=\"table table-striped table-bordered\"><thead><tr><th>Projeto</th><th>Total Fitas Gravadas</th><th>Repositorio Externo</th><th>Repositorio Local</th><th>Total Fitas Reciclagem</th><th>Total Fitas</th></tr></thead><tbody>");
 
   var for__16 = 0;
 
-  marko_forEach(data, function(info) {
+  marko_forEach(data.reportmedias, function(info) {
     var keyscope__17 = "[" + ((for__16++) + "]");
 
-    out.w("<tr><th scope=\"row\">" +
+    out.w("<tr><th scope=\"row\"><a href=\"/tapes?project=" +
+      marko_escapeXmlAttr(info.group) +
+      "\">" +
       marko_escapeXml(info.group) +
-      "</th><td>" +
+      "</a></th><td>" +
       marko_escapeXml(info.total_remote + info.total_local) +
-      "</td><td>" +
+      "</td><td><a href=\"/tapes?project=" +
+      marko_escapeXmlAttr(info.group) +
+      "&amp;repo=externo\">" +
       marko_escapeXml(info.total_remote) +
-      "</td><td>" +
+      "</a></td><td><a href=\"/tapes?project=" +
+      marko_escapeXmlAttr(info.group) +
+      "&amp;repo=local\">" +
       marko_escapeXml(info.total_local) +
-      "</td><td>" +
+      "</a></td><td><a href=\"/tapes?project=" +
+      marko_escapeXmlAttr(info.group) +
+      "&amp;repo=reciclagem\">" +
       marko_escapeXml(info.total_scratch) +
-      "</td><td>" +
+      "</a></td><td><a href=\"/tapes?project=" +
+      marko_escapeXmlAttr(info.group) +
+      "\">" +
       marko_escapeXml(info.total) +
-      "</td></tr>");
+      "</a></td></tr>");
   });
 
   out.w("</tbody></table>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "25");
+  await_reorderer_tag({}, out, __component, "30");
 
   out.w("</body></html>");
 }

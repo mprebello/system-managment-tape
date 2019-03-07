@@ -20,7 +20,10 @@ module.exports = (app) => {
    app.use('/*', function(req, res, next) {
     authUser = new app.persist.AuthUser();
     authUser.validateToken(req)
-            .then(ok => { next() })
+            .then(authUserInfo => {
+              res.authUserInfo = authUserInfo ;
+              next();
+            })
             .catch(error => res.redirect('./login'));
     });
 

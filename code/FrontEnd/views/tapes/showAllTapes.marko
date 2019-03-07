@@ -3,33 +3,103 @@
       <include('../templates/header.marko')></include>
     </head>
     <body>
-      <include('../templates/menu.marko')></include>
+      <include('../templates/menu.marko', {user: data.user_info.login })></include>
         <h2>Fitas</h2><br>
-        <input type="text" id="myInput" onkeyup="searchInTable()" placeholder="Procure pelo Serial">
-        <table id="myTable" class="table table-hover">
+        <table id="myTable" class="table table-hover" width="100%">
           <thead class="thead-dark">
             <tr>
+              <td><input type="text" value="${data.value_serial}" id="myInputSerial" onkeyup="searchAllField()" placeholder="Procure pelo Serial"></td>
+              <td><input type="text" value="${data.value_media}" id="myInputMediaName" onkeyup="searchAllField()" placeholder="Procure pela Media"></td>
+              <td>
+                <select id="myInputProject" placeholder="Escolha um Projeto" value="${data.value_project}" onchange="searchAllField()">
+                  <option value=""></option>
+                  <ul for (project in data.projects)>
+                      <if( data.value_project == project )>
+                        <li><option selected="${project}" value="${project}">${project}</option></li>
+                      </if>
+                      <else>
+                        <li><option value="${project}">${project}</option></li>
+                    </else>
+                  </ul>
+                </select>
+              </td>
+              <td>
+                <select id="myInputRepo" placeholder="Escolha um Repositorio" value="${data.value_repository}" onchange="searchAllField()">
+                  <option></option>
+                  <ul for (repo in data.repository)>
+                    <if( data.value_repository == repo )>
+                      <li><option selected="${repo}" value="${repo}">${repo}</option></li>
+                    </if>
+                    <else>
+                      <li><option value="${repo}">${repo}</option></li>
+                    </else>
+                  </ul>
+                </select>
+              </td>
+              <td>
+                <select id="myInputPool" value="${data.value_pool}" placeholder="Escolha um Pool" onchange="searchAllField()">
+                  <option></option>
+                  <ul for (pool in data.pools)>
+                    <if( data.value_pool == pool )>
+                      <li><option selected="${pool}" value="${pool}">${pool}</option></li>
+                    </if>
+                    <else>
+                      <li><option value="${pool}">${pool}</option></li>
+                    </else>
+                  </ul>
+                </select>
+              </td>
+              <td>
+                <select id="myInputServer" value="${data.value_server}" placeholder="Escolha um Servidor" onchange="searchAllField()">
+                  <option value=""></option>
+                  <ul for (server in data.servers)>
+                    <if( data.value_server == server )>
+                      <li><option selected="${server}" value="${server}">${server}</option></li>
+                    </if>
+                    <else>
+                      <li><option value="${server}">${server}</option></li>
+                    </else>
+                  </ul>
+                </select>
+              </td>
+              <td>
+                <!-- future impemention
+                <input type="date" value="" id="myInputDateWriteIn" onchange="searchAllField()" placeholder="Data de entrada">
+                <input type="date" value="" id="myInputDateWriteOut" onchange="searchAllField()" placeholder="Data de entrada">
+                -->
+              </td>
+              <td>
+                <!-- future impemention
+                <input type="date" value="" id="myInputTimeToExpireIn" onchange="searchAllField()" placeholder="Procure pelo Tempo">
+                <input type="date" value="" id="myInputTimeToExpireOut" onchange="searchAllField()" placeholder="Procure pelo Tempo">
+                -->
+              </td>
+            </tr>
+            <tr>
               <th scope="col">Serial</th>
-              <th scope="col">Nome da Media</th>
-              <th scope="col">Pool da Media</th>
-              <th scope="col">ServerName Media</th>
-              <th scope="col">Ultima escrita</th>
-              <th scope="col">Tempo para Expira</th>
+              <th scope="col">Nome</th>
               <th scope="col">Projeto</th>
+              <th scope="col">Repositorio</th>
+              <th scope="col">Pool</th>
+              <th scope="col">Server</th>
+              <th scope="col">Ultima escrita</th>
+              <th scope="col">Data a Expirar</th>
             </tr>
           </thead>
-          <tbody>
-            <tr for (fita in data)>
-              <th scope="row">${fita.MediaSerial}</th>
+          <tbody id="myData">
+            <tr for (fita in data.medias)>
+              <th id="row_data" scope="row">${fita.MediaSerial}</th>
               <td>${fita.MediaName}</td>
+              <td>${fita.Project}</td>
+              <td>${fita.Repo}</td>
               <td>${fita.Pool}</td>
               <td>${fita.ServerName}</td>
               <td>${fita.LastWritten}</td>
               <td>${fita.ExpirationDate}</td>
-              <td>${fita.Project}</td>
             </tr>
           </tbody>
         </table>
     </body>
     <script src='jspub/searchInTable.js'></script>
+    <include('../templates/searchScript.marko')></include>
 </html>

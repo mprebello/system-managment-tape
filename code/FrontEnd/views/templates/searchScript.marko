@@ -1,0 +1,72 @@
+<script>
+function searchAllField(){
+  var input, table, tr, td, i, txtValue, field;
+  table = document.getElementById("myData");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    field = tr[i];
+    column_Information_mymedia = validateField(field, 'myInputMediaName');
+    column_Information_myinput = validateField(field, 'myInputSerial');
+    column_Information_myinputpool = validateField(field, 'myInputPool');
+    column_Information_myinputproject = validateField(field, 'myInputProject');
+    column_Information_myinputserver = validateField(field, 'myInputServer');
+    column_Information_myinputrepo = validateField(field, 'myInputRepo');
+
+    if (column_Information_mymedia && column_Information_myinput && column_Information_myinputpool && column_Information_myinputproject && column_Information_myinputserver && column_Information_myinputrepo){
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+
+function validateField(field, inputField){
+  var input, input_value_upper, field_to_compare, txtValue
+  input = document.getElementById(inputField);
+  input_value_upper = input.value.toUpperCase();
+  switch (inputField) {
+    case 'myInputSerial':
+      field_to_compare = field.getElementsByTagName("th")[0];
+      break;
+    case 'myInputMediaName':
+      field_to_compare = field.getElementsByTagName("td")[0];
+      break;
+    case 'myInputPool':
+      JSON.stringify(input);
+      field_to_compare = field.getElementsByTagName("td")[3];
+      break;
+    case 'myInputServer':
+      field_to_compare = field.getElementsByTagName("td")[4];
+      break;
+    case 'myInputDateWriteIn':
+      field_to_compare = field.getElementsByTagName("td")[5];
+      break;
+    case 'myInputDateWriteOut':
+      field_to_compare = field.getElementsByTagName("td")[5];
+      break;
+    case 'myInputTimeToExpireIn':
+      field_to_compare = field.getElementsByTagName("td")[6];
+      break;
+    case 'myInputTimeToExpireOut':
+      field_to_compare = field.getElementsByTagName("td")[6];
+      break;
+    case 'myInputProject':
+      field_to_compare = field.getElementsByTagName("td")[1];
+      break;
+    case 'myInputRepo':
+      field_to_compare = field.getElementsByTagName("td")[2];
+      break;
+  }
+
+  txtValue = field_to_compare.textContent || field_to_compare.innerText
+  if (txtValue.toUpperCase().indexOf(input_value_upper) > -1){
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
+
+searchAllField();
+</script>
