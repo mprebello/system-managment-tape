@@ -1,0 +1,17 @@
+var express      = require('express'),
+    passport     = require('passport'),
+    bodyParser   = require('body-parser'),
+    LdapStrategy = require('passport-ldapauth');
+
+var OPTS = {
+  server: {
+    url: 'ldap://172.16.5.5:389',
+    searchBase: 'dc=unisys,dc=local',
+    searchFilter: '(uid={{username}})'
+  }
+};
+
+passport.use(new LdapStrategy(OPTS));
+passport.initialize();
+passport.authenticate('ldapauth', {session: false});
+//console.log(teste);

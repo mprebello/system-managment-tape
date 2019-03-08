@@ -18,6 +18,16 @@ class AuthUser {
       });
     }
 
+
+  generateToken(username){
+    this._user = username;
+    return new Promise ((resolve, reject) => {
+        var generate_token = this._createToken();
+        return resolve(generate_token);
+        return reject('nook');
+      });
+    }
+
   validateTokenAlwaysTrue(req){
       var token = '1';
       return new Promise ((resolve, reject) => {
