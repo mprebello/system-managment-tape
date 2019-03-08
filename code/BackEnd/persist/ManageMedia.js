@@ -19,7 +19,7 @@ class ManageMedia2 {
 
   listAllTapes(){
     return new Promise ( (resolve, reject) => {
-      this._connection.query('select * from Library', (error, tapes) => {
+      this._connection.query('select * from Library Order By MediaSerial', (error, tapes) => {
         if (error) {
           return reject('erro');
         }
