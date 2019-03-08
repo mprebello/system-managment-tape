@@ -17,6 +17,7 @@
     "cookie-parser": "^1.4.4",
     "express": "4.16.3",
     "express-validator": "^5.3.1",
+    "jquery": "^3.3.1",
     "jsonwebtoken": "^8.5.0",
     "marko": "4.13.4-1",
     "method-override": "3.0.0",
