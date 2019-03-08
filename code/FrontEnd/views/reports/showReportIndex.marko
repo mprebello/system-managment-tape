@@ -4,9 +4,14 @@
 </head>
   <body>
     <include('../templates/menu.marko', {user: data.user_info.login })></include>
-	   <h2>Relatorio Fitas</h2>
+     <div class="container-fluid">
       <table class="table table-striped table-bordered">
         <thead>
+          <div  class="container-fluid">
+            <tr>
+              <td colspan="6" align="left"><b>Relatório de Medias</b></td>
+            </tr>
+          </div>
           <tr>
             <th>Projeto</th>
             <th>Total Fitas Gravadas</th>
@@ -27,5 +32,6 @@
           </tr>
         </tbody>
       </table>
+    </div>
   </body>
 </html>

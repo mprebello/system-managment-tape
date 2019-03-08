@@ -4,9 +4,20 @@
     </head>
     <body>
       <include('../templates/menu.marko', {user: data.user_info.login })></include>
-        <h2>Fitas</h2><br>
-        <table id="myTable" class="table table-hover" width="100%">
+      <div class="container-fluid">
+        <table id="myTable" class="table table-hover">
           <thead class="thead-dark">
+            <div  class="container-fluid">
+              <tr>
+                <td colspan="8" align="left"><b>Detalhes Medias</b></td>
+              </tr>
+            </div>
+            <div  class="container-fluid">
+              <tr>
+                <td colspan="8" align="left"><button onclick="window.location.href='/tapes'" type="button" class="btn btn-secondary btn-sm">Limpar Filtros</button></td>
+              </tr>
+            </div>
+            <div  class="container-fluid">
             <tr>
               <td><input type="text" value="${data.value_serial}" id="myInputSerial" onkeyup="searchAllField()" placeholder="Procure pelo Serial"></td>
               <td><input type="text" value="${data.value_media}" id="myInputMediaName" onkeyup="searchAllField()" placeholder="Procure pela Media"></td>
@@ -75,6 +86,7 @@
                 -->
               </td>
             </tr>
+            </div>
             <tr>
               <th scope="col">Serial</th>
               <th scope="col">Nome</th>
@@ -99,6 +111,7 @@
             </tr>
           </tbody>
         </table>
+      </div>
     </body>
     <script src='jspub/searchInTable.js'></script>
     <include('../templates/searchScript.marko')></include>
