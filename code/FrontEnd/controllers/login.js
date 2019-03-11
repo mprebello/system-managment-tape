@@ -1,8 +1,11 @@
 module.exports = (app) => {
 async function generateViewLogin(resp){
-  //manageInformation = new app.persist.ManageInformation();
-  //const captureReportMedias = await manageInformation.captureReportMedias().catch(error => console.log(error));
-  resp.marko(require('../views/login/loginForm.marko'));
+  var config = require('../config/config.json');
+  manageCaptcha = new app.persist.ManageCaptcha();
+  var client_side_key = manageCaptcha.getClientKey();
+  resp.marko(require('../views/login/loginForm.marko'), {
+    client_side_key: client_side_key
+  });
 }
 
 app.get('/login', function(req, resp) {

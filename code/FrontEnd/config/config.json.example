@@ -11,6 +11,9 @@
     "ldapserver": "ldap://x.x.x.x:389",
     "searchBase": "dc=xxx,dc=xxxx",
     "filter": "(uid={{usexrname}})",
-    "secretKeyToken" : "XXXXXXXXXXXXXXXXXXXX"
+    "secretKeyToken" : "XXXXXXXXXXXXXXXXXXXX",
+    "google_recaptcha_client_side" : "XXXXXXXX",
+    "google_recaptcha_server_side" : "XXXXXXXX",
+    "google_verify_site": "https://www.google.com/recaptcha/api/siteverify"
   }
 }

@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 
 module.exports = function(){
   var app = express();
-
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(cookieParser());

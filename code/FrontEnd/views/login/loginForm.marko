@@ -1,6 +1,7 @@
 <html lang="en">
 	<head>
 		<include('../templates/header.marko')></include>
+		<script src="https://www.google.com/recaptcha/api.js?render=${data.client_side_key}"></script>
 	</head>
 	<body>
 		<div class="login-form">
@@ -18,10 +19,23 @@
         <div class="form-group">
             <button type="submit" class="btn btn-dark btn-block" value="login">Log in</button>
         </div>
+				<div class="form-group">
+					<div class="g-recaptcha" data-sitekey="${data.client_side_key}">
+						<input type="hidden" id="recaptcha_response" name="recaptcha_response" value="">
+					</div>
+        </div>
 				<div  class="form-group" align="center">
             <label class="form-group"><a href="https://senha.uninet.com.br">Recuperar Senha</a></label>
         </div>
     	</form>
 		</div>
+		<script>
+			grecaptcha.ready(function() {
+					grecaptcha.execute("${data.client_side_key}", {action: 'login'})
+							.then(function(token) {
+								$("#recaptcha_response").val(token);
+					});
+			});
+		</script>
 	</body>
 </html>

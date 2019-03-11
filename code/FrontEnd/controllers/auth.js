@@ -13,8 +13,11 @@ module.exports = (app) => {
   }
 
   app.post('/auth', function(req, res, next) {
-    //this function will implement the captcha
-    next();
+    manageCaptcha = new app.persist.ManageCaptcha();
+    manageCaptcha.validateToken(req)
+            .then(ok => next()).
+            catch(error =>res.redirect('./login'));
+
   });
 
 function initializeLdap(){
