@@ -7,8 +7,8 @@ class ManageCaptcha {
     this._config_server_side = config.authentication.google_recaptcha_server_side;
     this._config_client_side = config.authentication.google_recaptcha_client_side;
     this._config_site_to_verify = config.authentication.google_verify_site;
+    this._config_proxy = config.authentication.proxy_to_access;
     this._client_answer = '';
-
   }
 
   getClientKey(){
@@ -23,8 +23,10 @@ class ManageCaptcha {
         return reject ('Erro no Captcha');
       }
       this._url_to_access = this._config_site_to_verify + '?secret=' + this._config_server_side  + '&response=' + this._client_answer + '&remoteip=' + this._client_ip;
-      request(this._url_to_access, (err, res, body) => {
+      var request_proxy = request.defaults({'proxy': this._config_proxy});
+      request_proxy(this._url_to_access, (err, res, body) => {
         if (err){
+          console.log(err);
           return reject(err);
         }
           body = JSON.parse(body);
