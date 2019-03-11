@@ -14,6 +14,7 @@
     "secretKeyToken" : "XXXXXXXXXXXXXXXXXXXX",
     "google_recaptcha_client_side" : "XXXXXXXX",
     "google_recaptcha_server_side" : "XXXXXXXX",
-    "google_verify_site": "https://www.google.com/recaptcha/api/siteverify"
+    "google_verify_site": "https://www.google.com/recaptcha/api/siteverify",
+    "mode": "production"
   }
 }
