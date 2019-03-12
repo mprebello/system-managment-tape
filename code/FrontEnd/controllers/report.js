@@ -9,7 +9,7 @@ async function generateViewAllReports(resp){
     user_info: resp.authUserInfo,
     reportmedias: captureReportMedias,
     medias_written_today: captureReportWrittenToday,
-    medias_written_today_subject: 'Fitas Escritas Ontem',
+    medias_written_today_subject: 'Fitas Escritas nos ultimos 3 dias',
     medias_will_expire: captureReportWillExpire,
     medias_will_expire_subject: 'Fitas a Expirar entre Hoje e Amanha',
     medias_move_to_scratch: captureReportMoveToScratch,

@@ -30,6 +30,14 @@ class ManageMedia2 {
   }
 
   _getDates(){
+
+    var date_last_2_days = new Date();
+    date_last_2_days.setDate(date_last_2_days.getDate() - 2);
+    date_last_2_days.setHours(0);
+    date_last_2_days.setMinutes(0);
+    date_last_2_days.setSeconds(0);
+    this._date_last_2_days = date_last_2_days.toISOString().replace('T', ' ').substr(0, 19);
+
     var date_yesterday_begin = new Date();
     date_yesterday_begin.setDate(date_yesterday_begin.getDate() - 1);
     date_yesterday_begin.setHours(0);
@@ -66,8 +74,8 @@ class ManageMedia2 {
 
   listTapesWrittenToday(){
     this._getDates();
-    var begin = this._date_yesterday_begin ;
-    var end = this._date_yesterday_final ;
+    var begin = this._date_last_2_days ;
+    var end = this._date_today_final ;
     var select_now = 'Select MediaSerial, '
     select_now += 'MediaName, '
     select_now += 'Pool, '
@@ -79,7 +87,7 @@ class ManageMedia2 {
     select_now += 'From Library where '
     select_now += 'LastWritten > \'' + begin + '\' and '
     select_now += 'LastWritten < \'' + end + '\' '
-    select_now += 'ORDER BY DAYS_TO_EXPIRE'
+    select_now += 'ORDER BY LastWritten DESC'
     return new Promise ( (resolve, reject) => {
           this._connection.query( select_now,(error, tapes) => {
         if (error) {
