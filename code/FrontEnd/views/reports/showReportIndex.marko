@@ -4,34 +4,19 @@
 </head>
   <body>
     <include('../templates/menu.marko', {user: data.user_info.login })></include>
-     <div class="container-fluid">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <div  class="container-fluid">
-            <tr>
-              <td colspan="6" align="left"><b>Relatório de Medias</b></td>
-            </tr>
-          </div>
-          <tr>
-            <th>Projeto</th>
-            <th>Total Fitas Gravadas</th>
-            <th>Repositorio Externo</th>
-            <th>Repositorio Local</th>
-            <th>Total Fitas Reciclagem</th>
-            <th>Total Fitas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr for (info in data.reportmedias)>
-              <th scope="row"><a href="/tapes?project=${info.group}">${info.group}</a></th>
-              <td>${info.total_remote +info.total_local}</td>
-              <td><a href="/tapes?project=${info.group}&repo=externo">${info.total_remote}</a></td>
-              <td><a href="/tapes?project=${info.group}&repo=local">${info.total_local}</a></td>
-              <td><a href="/tapes?project=${info.group}&repo=reciclagem">${info.total_scratch}</a></td>
-              <td><a href="/tapes?project=${info.group}">${info.total}</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <include('./showReportAllMedias.marko', {reportmedias: data.reportmedias})></include>
+    <br>
+    <include('./showReportToDo.marko', {
+      subject: data.medias_written_today_subject,
+      medias: data.medias_written_today
+    })></include>
+    <br>
+    <include('./showReportToDo.marko', {
+      subject: data.medias_will_expire_subject,
+      medias: data.medias_will_expire })></include>
+    <br>
+    <include('./showReportToDo.marko', {
+      subject: data.medias_move_to_scratch_subject,
+      medias: data.medias_move_to_scratch })></include>
   </body>
 </html>

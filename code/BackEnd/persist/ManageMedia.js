@@ -29,6 +29,122 @@ class ManageMedia2 {
     });
   }
 
+  _getDates(){
+    var date_yesterday_begin = new Date();
+    date_yesterday_begin.setDate(date_yesterday_begin.getDate() - 1);
+    date_yesterday_begin.setHours(0);
+    date_yesterday_begin.setMinutes(0);
+    date_yesterday_begin.setSeconds(0);
+    this._date_yesterday_begin = date_yesterday_begin.toISOString().replace('T', ' ').substr(0, 19);
+
+    var date_yesterday_final = new Date();
+    date_yesterday_final.setDate(date_yesterday_final.getDate() - 1);
+    date_yesterday_final.setHours(23);
+    date_yesterday_final.setMinutes(59);
+    date_yesterday_final.setSeconds(59);
+    this._date_yesterday_final = date_yesterday_final.toISOString().replace('T', ' ').substr(0, 19);
+
+    var date_today_begin = new Date();
+    date_today_begin.setHours(0);
+    date_today_begin.setMinutes(0);
+    date_today_begin.setSeconds(0);
+    this._date_today_begin = date_today_begin.toISOString().replace('T', ' ').substr(0, 19);
+
+    var date_today_final = new Date();
+    date_today_final.setHours(23);
+    date_today_final.setMinutes(59);
+    date_today_final.setSeconds(59);
+    this._date_today_final = date_today_final.toISOString().replace('T', ' ').substr(0, 19) ;
+
+    var date_tommorrow_final = new Date();
+    date_tommorrow_final.setDate(date_tommorrow_final.getDate() + 1);
+    date_tommorrow_final.setHours(23);
+    date_tommorrow_final.setMinutes(59);
+    date_tommorrow_final.setSeconds(59);
+    this._date_tommorrow_final = date_tommorrow_final.toISOString().replace('T', ' ').substr(0, 19) ;
+  }
+
+  listTapesWrittenToday(){
+    this._getDates();
+    var begin = this._date_yesterday_begin ;
+    var end = this._date_yesterday_final ;
+    var select_now = 'Select MediaSerial, '
+    select_now += 'MediaName, '
+    select_now += 'Pool, '
+    select_now += 'ServerName, '
+    select_now += 'Project, '
+    select_now += 'LastWritten, '
+    select_now += 'ExpirationDate, '
+    select_now += 'DATEDIFF(ExpirationDate,CURDATE()) as DAYS_TO_EXPIRE '
+    select_now += 'From Library where '
+    select_now += 'LastWritten > \'' + begin + '\' and '
+    select_now += 'LastWritten < \'' + end + '\' '
+    select_now += 'ORDER BY DAYS_TO_EXPIRE'
+    return new Promise ( (resolve, reject) => {
+          this._connection.query( select_now,(error, tapes) => {
+        if (error) {
+          return reject(error);
+        }
+        var tapes_with_repository = this._insertRepository(tapes);
+        return resolve(tapes_with_repository);
+      });
+    });
+  }
+
+  listsTapesThatWillExpire(){
+    this._getDates();
+    var begin = this._date_today_begin ;
+    var end = this._date_tommorrow_final ;
+    var select_now = 'Select MediaSerial, '
+    select_now += 'MediaName, '
+    select_now += 'Pool, '
+    select_now += 'ServerName, '
+    select_now += 'Project, '
+    select_now += 'LastWritten, '
+    select_now += 'ExpirationDate, '
+    select_now += 'DATEDIFF(ExpirationDate,CURDATE()) as DAYS_TO_EXPIRE '
+    select_now += 'From Library where '
+    select_now += 'ExpirationDate > \'' + begin + '\' and '
+    select_now += 'ExpirationDate < \'' + end + '\' '
+    select_now += 'ORDER BY DAYS_TO_EXPIRE'
+    return new Promise ( (resolve, reject) => {
+      this._connection.query(select_now, (error, tapes) => {
+        if (error) {
+          return reject('erro');
+        }
+        var tapes_with_repository = this._insertRepository(tapes);
+        return resolve(tapes_with_repository);
+      });
+    });
+  }
+
+  listsTapesThatMustBeMovedToScratch(){
+    this._getDates();
+    var begin = this._date_yesterday_begin ;
+    var end = this._date_yesterday_final ;
+    var select_now = 'Select MediaSerial, '
+    select_now += 'MediaName, '
+    select_now += 'Pool, '
+    select_now += 'ServerName, '
+    select_now += 'Project, '
+    select_now += 'LastWritten, '
+    select_now += 'ExpirationDate, '
+    select_now += 'DATEDIFF(ExpirationDate,CURDATE()) as DAYS_TO_EXPIRE '
+    select_now += 'From Library where '
+    select_now += 'ExpirationDate > \'' + begin + '\' and '
+    select_now += 'ExpirationDate < \'' + end + '\' '
+    select_now += 'ORDER BY DAYS_TO_EXPIRE'
+    return new Promise ( (resolve, reject) => {
+      this._connection.query(select_now, (error, tapes) => {
+        if (error) {
+          return reject('erro');
+        }
+        var tapes_with_repository = this._insertRepository(tapes);
+        return resolve(tapes_with_repository);
+      });
+    });
+  }
+
   captureAllGroups(){
     return new Promise ( (resolve, reject) => {
       this._connection.query('SELECT DISTINCT(Project) as PROJECT FROM Library;', (error, groups) => {

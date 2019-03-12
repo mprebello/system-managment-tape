@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <div  class="container-fluid">
+        <tr>
+          <td colspan="8" align="left"><b>${data.subject}</b></td>
+        </tr>
+      </div>
+      <tr>
+        <th scope="col">Serial</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Projeto</th>
+        <th scope="col">Repositorio</th>
+        <th scope="col">Pool</th>
+        <th scope="col">Server</th>
+        <th scope="col">Ultima escrita</th>
+        <th scope="col">Data a Expirar</th>
+        <th scope="col">Dias para expirar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr for (media in data.medias)>
+        <th id="row_data" scope="row">${media.MediaSerial}</th>
+        <td>${media.MediaName}</td>
+        <td>${media.Project}</td>
+        <td>${media.Repo}</td>
+        <td>${media.Pool}</td>
+        <td>${media.ServerName}</td>
+        <td>${media.LastWritten}</td>
+        <td>${media.ExpirationDate}</td>
+        <td>${media.DAYS_TO_EXPIRE}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

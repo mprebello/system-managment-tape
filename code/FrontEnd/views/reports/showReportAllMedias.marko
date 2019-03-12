@@ -1,0 +1,29 @@
+<div class="container-fluid">
+<table class="table table-striped table-bordered">
+  <thead>
+    <div  class="container-fluid">
+      <tr>
+        <td colspan="6" align="left"><b>Relatório de Medias</b></td>
+      </tr>
+    </div>
+    <tr>
+      <th>Projeto</th>
+      <th>Total Fitas Gravadas</th>
+      <th>Repositorio Externo</th>
+      <th>Repositorio Local</th>
+      <th>Total Fitas Reciclagem</th>
+      <th>Total Fitas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr for (info in data.reportmedias)>
+        <th scope="row"><a href="/tapes?project=${info.group}">${info.group}</a></th>
+        <td>${info.total_remote +info.total_local}</td>
+        <td><a href="/tapes?project=${info.group}&repo=externo">${info.total_remote}</a></td>
+        <td><a href="/tapes?project=${info.group}&repo=local">${info.total_local}</a></td>
+        <td><a href="/tapes?project=${info.group}&repo=reciclagem">${info.total_scratch}</a></td>
+        <td><a href="/tapes?project=${info.group}">${info.total}</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>

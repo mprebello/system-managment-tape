@@ -27,6 +27,37 @@ class ManageInformation {
     });
   }
 
+  captureReportWrittenToday(){
+    return new Promise ((resolve, reject) => {
+      let path_to_access = this._server_to_connect + '/tapes/writtentoday';
+      request( path_to_access,{ json: true }, (err, res, body) => {
+        if (err) { return reject(err); }
+        return resolve(body);
+      });
+    });
+  }
+
+  captureReportWillExpire(){
+    return new Promise ((resolve, reject) => {
+      let path_to_access = this._server_to_connect + '/tapes/willexpire';
+      request( path_to_access,{ json: true }, (err, res, body) => {
+        if (err) { return reject(err); }
+        return resolve(body);
+      });
+    });
+  }
+
+  captureReportMoveToScratch(){
+    return new Promise ((resolve, reject) => {
+      let path_to_access = this._server_to_connect + '/tapes/movetoscratch';
+      request( path_to_access,{ json: true }, (err, res, body) => {
+        if (err) { return reject(err); }
+        return resolve(body);
+      });
+    });
+  }
+
+
 }
 
 
